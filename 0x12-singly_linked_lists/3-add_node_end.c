@@ -1,9 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lists.h"
-list_t *add_node(list_t **head, const char *str)
+list_t *add_node_end(list_t **head, const char *str)
 {
 	list_t *n;
+	list_t *temp = *head;
 	unsigned int len = 0;
 
 	while (str[len])
@@ -15,8 +16,18 @@ list_t *add_node(list_t **head, const char *str)
 
 	n->str = strdup(str);
 	n->len = len;
-	n->next = (*head);
-	(*head) = n;
+	n->next = NULL;
 
-	return (*head);
+	if (*head == NULL)
+	{
+		*head = n;
+		return (n);
+	}
+
+	while (temp->next)
+		temp = temp->next;
+
+	temp->next = n;
+
+	return (n);
 }
